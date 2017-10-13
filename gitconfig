@@ -1,0 +1,63 @@
+[user]
+	name = Admir Trakic
+	email = xxxxxxxxxx
+[alias]
+	sha = rev-parse HEAD
+	last = log -1 HEAD
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	# As lg, bur for all branches
+	logc  = log --color --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	logca = !git logc --all
+	logpretty = !git log --pretty=oneline
+	loglast = !git log -1 HEAD
+	logstat = !git log --stat
+	# Show status short (paths relative to current dir),and show head of log
+	lghs = !cd ./$GIT_PREFIX && git status -s && git lg|head
+	# Show status short (paths relative to current dir),and show head of log
+	# for all branches - this might not show head for current branch
+	lgahs = !cd ./$GIT_PREFIX && git status -s && git lga|head
+	# synchronize your branch list
+	sync  = !git fetch -p
+	# see both local and remote branches
+	bra = !git branch -a
+	# git log --author="Jon" --pretty=format:"%h - %an, %ar : %s" 
+	sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
+	stash-unapply = !git stash show -p | git apply -R
+	
+# https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop 
+	up = "!git remote update -p; git merge --ff-only @{u}"
+[core]
+	editor = vim
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	whitespace = trailing-space,space-before-tab
+	autocrlf = input
+	excludesfile = ~/.gitignore
+[pull] 
+	rebase = true
+[push]
+	default = tracking
+[diff]
+  	#external = /usr/bin/vimdiff
+	renames = copies
+	mnemonicprefix = true
+[branch]
+	autosetupmerge = true
+	autosetuprebase = always
+[merge]
+	stat = true
+[color]
+	ui = auto
+[rerere]
+	enabled = true
+[advice]
+        statusHints = true
+        pushNonFastForward = false
+[credential "https://git-codecommit.*.amazonaws.com"]
+ helper = !aws codecommit credential-helper $@
+ UseHttpPath = true
+
+# http://nuclearsquid.com/writings/git-tricks-tips-workflows/
+# https://mislav.net/2010/07/git-tips/
