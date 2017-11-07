@@ -1,229 +1,161 @@
-# OS X
-.DS_Store
-Icon?
 
-# Thumbnails #
-._*
+# Created by https://www.gitignore.io/api/maven,python,clojure,terraform,vim
 
-# Files that might appear on external disk #
-.Spotlight-V100
-.Trashes
-
-# Linux
-.*
+### Vim ###
+## swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+## session
+Session.vim
+## temporary
+.netrwhist
 *~
-*.sw[a-p]
-
-# KDE
-.directory
-
-# Compiled source #
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Packages #
-# It's better to unpack these files and commit the raw source because
-# git has its own built in compression methods.
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.tar.gz
-*.zip
-*.bzip
-
-# Logs and databases #
-*.log
-*.sql
-*.sqlite
-
-# Vim #
-*.swp
-*.swo
-.*.sw[a-z]
-*.un~
-
-# Emacs #
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-.elc
-auto-save-list
-tramp
-
-# TextMate #
-*.tmproj
-*.tmproject
-tmtags
-
-# Redcar #
-.redcar
-
-# etags/ctags #
-TAGS
+## auto-generated tag files
 tags
 
-# SVN #
-/.svn/*
-*/.svn/*
 
-# Automake #
-# http://www.gnu.org/software/automake
+### Clojure ###
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/lib/
+/classes/
+/target/
+/checkouts/
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+.lein-failures
+.nrepl-port
 
-Makefile.in
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 
-# http://www.gnu.org/software/autoconf
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
 
-/autom4te.cache
-/aclocal.m4
-/compile
-/configure
-/depcomp
-/install-sh
-/missing
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# CMake #
-CMakeCache.txt
-CMakeFiles
-cmake_install.cmake
-install_manifest.txt
-
-# C/C++ #
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
+# C extensions
 *.so
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# LaTeX #
-*.aux
-*.bbl
-*.blg
-*.glg
-*.glo
-*.gls
-*.idx
-*.ilg
-*.ind
-*.ist
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
 *.log
-*.out
-*.toc
-*.fdb_latexmk
-*.pdfsync
-*.synctex.gz
-*.nav
-*.snm
-*.vrb
+local_settings.py
 
-# Node #
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+# Flask stuff:
+instance/
+.webassets-cache
 
-pids
-logs
-results
+# Scrapy stuff:
+.scrapy
 
-# Xcode/Objective-C #
-build/*
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
-xcuserdata
-profile
-*.moved-aside
+# Sphinx documentation
+docs/_build/
 
-# Scala #
-*.class
-*.log
+# PyBuilder
 
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# Ruby #
-coverage
-rdoc
-pkg
-test/tmp
-test/version_tmp
-tmp
-pkg
-*.gem
-*.rbc
-lib/bundler/man
-spec/reports
-.config
-InstalledFiles
-.bundle
+# pyenv
+.python-version
 
-# YARD artifacts
-.yardoc
-_yardoc
-doc/
+# celery beat schedule file
+celerybeat-schedule
 
-# Rails #
-*.rbc
-*.sassc
-.sass-cache
-capybara-*.html
-.rspec
-/.bundle
-/vendor/bundle
-/log/*
-/tmp/*
-/db/*.sqlite3
-/public/system/*
-/coverage/
-/spec/tmp/*
-*.orig
-config/database.yml
-config/secrets.yml
-rerun.txt
+# SageMath parsed files
+*.sage.py
 
-# Java #
-*.class
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# Terraform # 
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+### Terraform ###
 # Compiled files
 *.tfstate
-*.tfstate.*.backup
 *.tfstate.backup
 
 # Module directory
 .terraform/
 
-# Variable values for development
-# terraform.tfvars
+### Terraform Patch ###
+# *.tfvars
+# End of https://www.gitignore.io/api/maven,python,clojure,terraform
+
