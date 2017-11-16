@@ -27,7 +27,7 @@
 	sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
 	stash-unapply = !git stash show -p | git apply -R
 # Funny stuff:
-  undo-howto = !ohshitgit.com | lynx --stdin
+  undo-howto = !curl -s ohshitgit.com | lynx --stdin
   localgit=! mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
 
 # https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop 
