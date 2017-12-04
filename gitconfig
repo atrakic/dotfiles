@@ -25,11 +25,18 @@
 	bra = !git branch -a
 	# git log --author="Jon" --pretty=format:"%h - %an, %ar : %s" 
 	sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
-	stash-unapply = !git stash show -p | git apply -R
+  stash-unapply = !git stash show -p | git apply -R
+  #get_last_file = !git co -- $1
+  amend = commit --amend
+  rank = shortlog -sn --no-merges
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  since = !git rev-list ..master HEAD
+  since-branching = !git rev-list ...master HEAD
+# apt-get install -y git-extras
+  root = !git git-root
 # Funny stuff:
   undo-howto = !curl -s ohshitgit.com | lynx --stdin
   localgit=! mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
-
 # https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop 
 	up = "!git remote update -p; git merge --ff-only @{u}"
 [core]
