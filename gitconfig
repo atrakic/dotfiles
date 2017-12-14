@@ -32,13 +32,18 @@
   whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
   since = !git rev-list ..master HEAD
   since-branching = !git rev-list ...master HEAD
+  two-weeks-ago = !git whatchanged --since='2 weeks ago'
 # apt-get install -y git-extras
   root = !git git-root
+  cdroot = "!f() { cd $(git rev-parse --show-toplevel); }; f"
 # Funny stuff:
   undo-howto = !curl -s ohshitgit.com | lynx --stdin
   localgit=! mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
 # https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop 
 	up = "!git remote update -p; git merge --ff-only @{u}"
+	git = since-branching
+  undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
+  co-yesterday-master = !git checkout master@{yesterday}
 [core]
 	editor = vim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
