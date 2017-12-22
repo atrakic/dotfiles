@@ -35,7 +35,7 @@ since = !git rev-list ..master HEAD
 since-branching = !git rev-list ...master HEAD
 two-weeks-ago = !git whatchanged --since='2 weeks ago'
 curr-tag = !git rev-parse --abbrev-ref HEAD
-curr-hash = !it rev-parse HEAD | cut -c1-6
+curr-hash = !git rev-parse HEAD | cut -c1-6
 # apt-get install -y git-extras
 root = !git git-root
 cdroot = "!f() { cd $(git rev-parse --show-toplevel); }; f"
