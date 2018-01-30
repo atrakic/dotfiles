@@ -81,3 +81,5 @@ UseHttpPath = true
 
 # http://nuclearsquid.com/writings/git-tricks-tips-workflows/
 # https://mislav.net/2010/07/git-tips/
+[help]
+	autocorrect = 1
