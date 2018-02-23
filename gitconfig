@@ -78,6 +78,8 @@ pushNonFastForward = false
 [credential "https://git-codecommit.*.amazonaws.com"]
 helper = !aws codecommit credential-helper $@
 UseHttpPath = true
+[credential]
+helper = cache
 
 # http://nuclearsquid.com/writings/git-tricks-tips-workflows/
 # https://mislav.net/2010/07/git-tips/
