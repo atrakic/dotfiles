@@ -1,6 +1,7 @@
 [user]
 name = Admir Trakic
-email = atr@skm.dk
+email = xomodo@gmail.com
+
 [alias]
 sha = rev-parse HEAD
 last = log -1 HEAD
@@ -48,6 +49,7 @@ git = since-branching
 undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
 co-yesterday-master = !git checkout master@{yesterday}
 all = "!f() { ls | xargs -I{} git -C {} $1; }; f"
+
 [core]
 editor = vim
 whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -55,32 +57,54 @@ whitespace = trailing-space,space-before-tab
 autocrlf = input
 excludesfile = ~/.gitignore
 sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+
 [pull]
 rebase = true
 [push]
 default = tracking
+
 [diff]
 #external = /usr/bin/vimdiff
 renames = copies
 mnemonicprefix = true
+
 [branch]
 autosetupmerge = true
 autosetuprebase = always
+
 [merge]
 stat = true
+
 [color]
 ui = auto
+
 [rerere]
 enabled = true
+
 [advice]
 statusHints = true
 pushNonFastForward = false
+
+# Use https instead of git and git+ssh
+[url "https://github.com/"]
+  insteadOf = git://github.com/
+[url "https://github.com/"]
+insteadOf = git@github.com:
+
+[credential "https://github.com/"]
+helper = store --file ~/.git-credentials
+helper = cache --timeout 30000
+
 [credential "https://git-codecommit.*.amazonaws.com"]
 helper = !aws codecommit credential-helper $@
 UseHttpPath = true
 [credential]
 helper = cache
 
+[http]
+cookiefile = ~/.gitcookies
+
+# Credits
 # http://nuclearsquid.com/writings/git-tricks-tips-workflows/
 # https://mislav.net/2010/07/git-tips/
 [help]
