@@ -1,0 +1,6 @@
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+@daily BUP_DIR=/data/.backup/.bup $(bup index /home/admirskm && bup save -n $(whoami) /home/$(whoami) &>/dev/null)
+@daily cd ~/Projects/SKM/github && cat .sync.sh|sh &>/dev/null
+@daily cd ~/Projects/github/starred && cat .sync.sh|sh &>/dev/null
