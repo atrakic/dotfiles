@@ -22,10 +22,20 @@ TG_VERSION=v0.13.0
 mkdir -p "$DIR" || exit 1
 printf ${green}"Installing toolbox on: $DIR"${neutral}"\n"
 
+bin=helm
+file=$DIR/$bin
+if [ ! -x "$(which $file)" ] || [ "$force" ]; then
+    export HELM_INSTALL_DIR=$DIR
+    curl -sL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+    echo "Installed $bin version $VERSION"
+    # minikube addons enable registry-creds
+    # helm init --upgrade && helm repo update
+fi
+
 bin=terragrunt
 file=$DIR/$bin
 if [ ! -x "$file" ] || [ "$force" ]; then
-  curl -sL https://github.com/gruntwork-io/terragrunt/releases/download/"$TG_VERSION"/terragrunt_linux_amd64 -o $file
+  curl -sL https://github.com/gruntwork-io/terragrunt/releases/download/"$TG_VERSION"/terragrunt_linux_amd64 -o "$file"
   chmod +x "$file" && echo "Installed $bin version: $TG_VERSION"
 fi
 
@@ -54,7 +64,7 @@ bin=terraform
 file=$DIR/$bin
 if [ ! -x "$file" ] || [ "$force" ]; then
   url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{terraform}' |egrep "linux_amd64" |grep url | grep -v beta | sort -rV | head -1 | awk -F[\"] '{print $4}')
-  cd /tmp/
+  cd /tmp/ || exit 1
   rm -rf $bin
   curl -o $bin.zip -sL "${url}"
   unzip -o $bin.zip
@@ -66,7 +76,7 @@ bin=packer
 file=$DIR/$bin
 if [ ! -x "$file" ] || [ "$force" ]; then
   url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{packer}' |egrep "linux_amd64" |grep url | sort -rV | head -1 | awk -F[\"] '{print $4}')
-  cd /tmp/
+  cd /tmp/ || exit 1
   curl -o $bin.zip -sL "${url}"
   unzip -o $bin.zip
   mv -f "$bin" "$DIR"
