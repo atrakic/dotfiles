@@ -14,6 +14,7 @@ neutral='\033[0m'
 DIR=${DIR:-"/opt/toolbox/bin"}
 force=${force:-"true"}
 
+DOCKER_MACHINE_VERSION="v0.14.0"
 DOCKER_COMPOSE_VERSION="1.22.0"
 KUBECTL_VERSION=v1.11.2 # v1.10.0
 MINIKUBE_VERSION=v0.28.2
@@ -21,6 +22,14 @@ TG_VERSION=v0.13.0
 
 mkdir -p "$DIR" || exit 1
 printf ${green}"Installing toolbox on: $DIR"${neutral}"\n"
+
+bin=docker-machine
+file=$DIR/$bin
+if [ ! -x "$file" ] || [ "$force" ]; then
+  base=https://github.com/docker/machine/releases/download/$DOCKER_MACHINE_VERSION &&
+  curl -sL $base/docker-machine-$(uname -s)-$(uname -m) -o "$file" &&
+  chmod +x "$file" && echo "Installed $bin version: $DOCKER_MACHINE_VERSION"
+fi
 
 bin=helm
 file=$DIR/$bin
@@ -87,5 +96,5 @@ fi
 echo "$DIR"
 export PATH=$DIR:$PATH
 
-pip install --upgrade pip
-pip install --user awscli ansible
+test $(which pip) && pip install --upgrade pip
+test $(which pip) && pip install --user awscli ansible
