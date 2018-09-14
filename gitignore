@@ -128,9 +128,9 @@ celerybeat-schedule
 # Environments
 .env
 .venv
-env/
+#env/
 venv/
-ENV/
+#ENV/
 env.bak/
 venv.bak/
 
@@ -156,6 +156,7 @@ venv.bak/
 .terraform/
 
 ### Terraform Patch ###
-# *.tfvars
 # End of https://www.gitignore.io/api/maven,python,clojure,terraform
 
+.build-harness
+build-harness/

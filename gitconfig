@@ -1,111 +1,91 @@
+# .gitconfig
+###
+
 [user]
-name = Admir Trakic
-email = xomodo@gmail.com
-
-[alias]
-sha = rev-parse HEAD
-last = log -1 HEAD
-st = status
-ci = commit
-br = branch
-co = checkout
-# As lg, bur for all branches
-logc  = log --color --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-logca = !git logc --all
-logpretty = !git log --pretty=oneline
-loglast = !git log -1 HEAD
-logstat = !git log --stat
-# Show status short (paths relative to current dir),and show head of log
-lghs = !cd ./$GIT_PREFIX && git status -s && git lg|head
-# Show status short (paths relative to current dir),and show head of log
-# for all branches - this might not show head for current branch
-lgahs = !cd ./$GIT_PREFIX && git status -s && git lga|head
-# synchronize your branch list
-sync  = !git fetch -p
-# see both local and remote branches
-bra = !git branch -a
-# git log --author="Jon" --pretty=format:"%h - %an, %ar : %s"
-sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
-stash-unapply = !git stash show -p | git apply -R
-#get_last_file = !git co -- $2
-deleted = log --diff-filter=D --summary
-amend = commit --amend
-rank = shortlog -sn --no-merges
-whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-since = !git rev-list ..master HEAD
-since-branching = !git rev-list ...master HEAD
-two-weeks-ago = !git whatchanged --since='2 weeks ago'
-curr-tag = !git rev-parse --abbrev-ref HEAD
-curr-hash = !git rev-parse HEAD | cut -c1-6
-# apt-get install -y git-extras
-root = !git git-root
-cdroot = "!f() { cd $(git rev-parse --show-toplevel); }; f"
-# Funny stuff:
-undo-howto = !curl -s ohshitgit.com | lynx --stdin
-localgit=! mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
-# https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop 
-up = "!git remote update -p; git merge --ff-only @{u}"
-git = since-branching
-undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
-co-yesterday-master = !git checkout master@{yesterday}
-all = "!f() { ls | xargs -I{} git -C {} $1; }; f"
-
+  name = Admir Trakic
+  email = xomodo@gmail.com
 [core]
-editor = vim
-whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-whitespace = trailing-space,space-before-tab
-autocrlf = input
-excludesfile = ~/.gitignore
-sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+  editor = vim
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  whitespace = trailing-space,space-before-tab
+  autocrlf = input
+  excludesfile = ~/.gitignore
+  sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+[alias]
+  sha = rev-parse HEAD
+  last = log -1 HEAD
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  logc = log --color --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  logc-all = !git logc --all
+  log-pretty = !git log --pretty=oneline
+  log-last = !git log -1 HEAD
+  log-stat = !git log --stat
+  lghs = !cd ./$GIT_PREFIX && git status -s && git lg|head  # Show status short (paths relative to current dir),and show head of log
+  lgahs = !cd ./$GIT_PREFIX && git status -s && git lga|head # Show status short (paths relative to current dir),and show head of log for all branches - this might not show head for current branch
+  sync  = !git fetch -p # synchronize your branch list
+  brall = !git branch -a  # see both local and remote branches
+  # git log --author="Jon" --pretty=format:"%h - %an, %ar : %s"
+  sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
+  stash-all = stash --include-untracked
+  #get_last_file = !git co -- $2
+  deleted = log --diff-filter=D --summary
+  amend = commit --amend
+  git = since-branching
+  rank = shortlog -sn --no-merges
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  stash-unapply = !git stash show -p | git apply -R
+  since = !git rev-list ..master HEAD
+  since-branching = !git rev-list ...master HEAD
+  two-weeks-ago = !git whatchanged --since='2 weeks ago'
+  curr-tag = !git rev-parse --abbrev-ref HEAD
+  curr-hash = !git rev-parse HEAD | cut -c1-6
+  co-yesterday-master = !git checkout master@{yesterday}
+  merged = !git branch -a --merged  # list merged branches
+  rebase-master = !git pull --rebase upstream master # Rebase your changes on top of the remote master
+
+  # [apt-get install -y git-extras]
+  root = !git git-root
+  up = "!git remote update -p; git merge --ff-only @{u}" # https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop
+  undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
+  all = "!f() { ls | xargs -I{} git -C {} $1; }; f"
+  cob = "!f() { git checkout -b $1 --set-upstream; }; f" # 1 - branch-name
+  squash-multiple = "!f() { git rebase -i $i; } f"
+  cdroot = "!f() { cd $(git rev-parse --show-toplevel); }; f"
+  cherry-pick = "!f() { git rebase $1^ ; }; f" # 1 - commitid
+
+  # [Funny stuff]:
+  git-tip = !docker run -it --rm djoudix/git-tip git-tip
+  undo-howto = !curl -s ohshitgit.com | lynx --stdin
+  localgit = !mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
 
 [pull]
-rebase = true
+  rebase = true
 [push]
-default = tracking
-
+  default = tracking
 [diff]
-#external = /usr/bin/vimdiff
-renames = copies
-mnemonicprefix = true
-
+  #external = /usr/bin/vimdiff
+  renames = copies
+  mnemonicprefix = true
 [branch]
-autosetupmerge = true
-autosetuprebase = always
-
+  autosetupmerge = true
+  autosetuprebase = always
 [merge]
-stat = true
-
+  stat = true
+  tool = xxdiff
 [color]
-ui = auto
-
+  ui = auto
 [rerere]
-enabled = true
-
+  enabled = true
 [advice]
-statusHints = true
-pushNonFastForward = false
-
-# Use https instead of git and git+ssh
-[url "https://github.com/"]
-  insteadOf = git://github.com/
-[url "https://github.com/"]
-insteadOf = git@github.com:
-
-[credential "https://github.com/"]
-helper = store --file ~/.git-credentials
-helper = cache --timeout 30000
-
+  statusHints = true
+  pushNonFastForward = false
 [credential "https://git-codecommit.*.amazonaws.com"]
-helper = !aws codecommit credential-helper $@
-UseHttpPath = true
+  helper = !aws codecommit credential-helper $@
+  UseHttpPath = true
+[commit]
+  template = $HOME/.gitmessage.txt
 [credential]
-helper = cache
-
-[http]
-cookiefile = ~/.gitcookies
-
-# Credits
-# http://nuclearsquid.com/writings/git-tricks-tips-workflows/
-# https://mislav.net/2010/07/git-tips/
-[help]
-	autocorrect = 1
+	helper = cache --timeout=3600
