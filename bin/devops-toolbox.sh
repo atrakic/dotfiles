@@ -69,6 +69,18 @@ if [ ! -x "$file" ] || [ "$force" ]; then
   chmod +x "$file" && echo "Installed $bin version: $DOCKER_COMPOSE_VERSION"
 fi
 
+bin=vault
+file=$DIR/$bin
+if [ ! -x "$file" ] || [ "$force" ]; then
+  url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{vault}' |egrep "linux_amd64" |grep url | grep -v beta | sort -rV | head -1 | awk -F[\"] '{print $4}')
+  cd /tmp/ || exit 1
+  rm -rf $bin
+  curl -o $bin.zip -sL "${url}"
+  unzip -o $bin.zip
+  mv -f "$bin" "$DIR" && echo "Installed $bin version: $VERSION"
+  rm -rf $bin.zip
+fi
+
 bin=terraform
 file=$DIR/$bin
 if [ ! -x "$file" ] || [ "$force" ]; then
