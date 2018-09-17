@@ -25,7 +25,7 @@ action="$1"
 case "$action" in
 
   "createkeys")
-  aws ec2 create-key-pair --key-name "$SSH_KEY" | jq -r '.KeyMaterial' > $CLUSTER_NAME.pem
+  aws ec2 create-key-pair --key-name "$SSH_KEY" | jq -r '.KeyMaterial' | tee $CLUSTER_NAME.pem
   chmod 400 "$CLUSTER_NAME.pem"
   ssh-keygen -y -f "$CLUSTER_NAME.pem" > "$CLUSTER_NAME.pub"
   ;;
