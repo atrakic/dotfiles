@@ -20,3 +20,4 @@ docker run -it -d \
     -v "$HOME":/home \
     jenkinsci/$DOCKER
 #    -v "$(pwd)/seed":/var/jenkins_home/workspace/seed \
+# curl --user 'username:password' --data-urlencode "script=$(< ./somescript.groovy)" https://localhost:8080/scriptText
