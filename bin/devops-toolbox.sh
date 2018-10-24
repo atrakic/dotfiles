@@ -100,7 +100,7 @@ function install_vault() {
   local bin=vault
   local file=$DIR/$bin
   if [ ! -x "$file" ] || [ "$force" ]; then
-    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{vault}' |egrep "linux_amd64" |grep url | grep -v beta | sort -rV | head -1 | awk -F[\"] '{print $4}')
+    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{vault}' |egrep "linux_amd64" |grep url | egrep -v "beta|alpha"| sort -rV | head -1 | awk -F[\"] '{print $4}')
     cd /tmp || exit 1
     rm -rf $bin
     curl -o $bin.zip -sL "${url}"
@@ -114,7 +114,7 @@ function install_terraform() {
   local bin=terraform
   local file=$DIR/$bin
   if [ ! -x "$file" ] || [ "$force" ]; then
-    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{terraform}' |egrep "linux_amd64" |grep url | grep -v beta | sort -rV | head -1 | awk -F[\"] '{print $4}')
+    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{terraform}' |egrep "linux_amd64" |grep url | egrep -v "beta|alpha" | sort -rV | head -1 | awk -F[\"] '{print $4}')
     cd /tmp/ || exit 1
     rm -rf $bin
     curl -o $bin.zip -sL "${url}"
@@ -128,7 +128,7 @@ function install_packer() {
   local bin=packer
   local file=$DIR/$bin
   if [ ! -x "$file" ] || [ "$force" ]; then
-    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{packer}' |egrep "linux_amd64" |grep url | sort -rV | head -1 | awk -F[\"] '{print $4}')
+    url=$(curl --silent https://releases.hashicorp.com/index.json | jq '{packer}' |egrep "linux_amd64" |grep url | egrep -v "beta|alpha" | sort -rV | head -1 | awk -F[\"] '{print $4}')
     cd /tmp/ || exit 1
     curl -o $bin.zip -sL "${url}"
     unzip -o $bin.zip
