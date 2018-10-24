@@ -2,17 +2,18 @@
 
 set -x
 
-BUCKET_NAME=$CLUSTER_NAME.$DOMAIN_NAME-$(date %s)
 SSH_KEY=$CLUSTER_DOMAIN.pub
 group_name=kops
 IP_ADDRESS=$(curl -s http://ipinfo.io/ip)
 
-export AWS_DEFAULT_PROFILE=${AWS_DEFAULT_PROFILE:-awskops}
-export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-west-1}
+#export AWS_DEFAULT_PROFILE=${AWS_DEFAULT_PROFILE:-awskops}
+#export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-west-1}
+
 export CLUSTER_NAME=${CLUSTER_NAME:-foo}
 export CLUSTER_DOMAIN=${CLUSTER_DOMAIN:-k8s.local}
-export KOPS_STATE_STORE=s3://$BUCKET_NAME
 
+BUCKET_NAME=$CLUSTER_NAME.$CLUSTER_DOMAIN.$(date +%s)
+export KOPS_STATE_STORE=s3://$BUCKET_NAME
 
 print_versions() {
   $kops version
@@ -116,7 +117,7 @@ main() {
       $kops validate cluster
       ;;
 
-    "delete")
+    "delete_cluster")
       echo "*** Deleting $CLUSTER_NAME.$CLUSTER_DOMAIN: ***"
       $kops delete cluster \
         --name "$CLUSTER_NAME.$CLUSTER_DOMAIN"\
@@ -129,7 +130,7 @@ main() {
       ;;
 
     *)
-      echo "<info>|<create_cluster>|<create_group>|<delete>|<status>"
+      echo "<create_iam_group>|<create_cluster>|<delete_cluster>|<status>"
       ;;
 
   esac
