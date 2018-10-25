@@ -53,8 +53,8 @@ alias tg-apply-all-suni="terragrunt apply-all --terragrunt-source-update --terra
 alias tg-destroy="terragrunt destroy"
 alias tg-destroy-all="terragrunt destroy-all --terragrunt-non-interactive -force" #  -get-plugins=false
 
-alias tg-output="terragrunt output" 
-alias tg-show="terragrunt show" 
+alias tg-output="terragrunt output"
+alias tg-show="terragrunt show"
 alias tg-state-list="terragrunt state list"
 alias tg-force-unlock="terragrunt force-unlock" # $<id>
 
@@ -66,7 +66,7 @@ alias tg-walk-apply-all="f() {for i in $@;do echo '$i'; pushd '$i';tg apply-all 
 alias tg-example='f() { echo Your arg was $@ };f'
 alias tg-foo='TF_VAR_foo_1=bar_1 TF_VAR_foo_2=bar_2 tg apply --terragrunt-source-update --terragrunt-non-interactive'
 
-alias tf-validate="terraform validate -check-variables=false" 
+alias tf-validate="terraform validate -check-variables=false"
 alias tf-fmt="terraform fmt"
 
 # __terragrunt__
