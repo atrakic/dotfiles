@@ -160,8 +160,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-# admir
 bindsym $mod+Shift+g exec "i3lock -c 000000"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -172,10 +170,7 @@ bar {
 }
 
 # auto run commands
-# set background
-# use the same background as slim (login manager)
-# this file is an alias to something in /home/jessie/Pictures
-exec --no-startup-id feh --bg-fill ${HOME}/Pictures/central-park.jpg
+#exec --no-startup-id foo bar 
 
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
