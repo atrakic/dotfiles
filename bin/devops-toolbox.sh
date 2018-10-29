@@ -43,7 +43,7 @@ function install_helm() {
   fi
 }
 
-function install_terragrun() {
+function install_terragrunt() {
   local bin=terragrunt
   local file=$DIR/$bin
   if [ ! -x "$file" ] || [ "$force" ]; then
@@ -144,7 +144,7 @@ function main() {
 
   install_docker_machine
   install_helm
-  install_terragrun
+  install_terragrunt
   install_docker_machine_driver_kvm
   install_minikube
   install_kubectl
