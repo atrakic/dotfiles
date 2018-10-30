@@ -48,4 +48,34 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 alias cheat_python="curl cheat.sh/python/"
-alias gitls-r='ls `git ls-files`'
+
+alias gitls-ls='ls `git ls-files`'
+
+# replace foo with bar occurences in git
+function sed-git-simple() {
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+     echo "Usage: \`sed-git-simple foo bar\`"
+     return 1
+  fi
+  sed -i 's#"\$1"#\"$2"#g' $(git ls-files)
+}
+
+# Create a git.io short URL
+function gitio() {
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+     echo "Usage: \`gitio slug github url\`"
+     return 1
+  fi
+  curl -i https://git.io/ -F "code=${1}" -F "url=${2}"
+}
+
+function gitcommitall() {
+  git add .
+  if [ -n "$2" ];then 
+    git commit -m "$2"
+  else
+    git commit -m 'Update'
+  fi
+  #git pull
+  #git push
+}
