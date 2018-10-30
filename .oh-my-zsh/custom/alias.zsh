@@ -48,4 +48,4 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 alias cheat_python="curl cheat.sh/python/"
-
+alias gitls-r='ls `git ls-files`'
