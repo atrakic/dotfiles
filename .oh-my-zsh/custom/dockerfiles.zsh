@@ -1,20 +1,20 @@
-MY_HUB=atrakic
+MY_HUB=xomodo
 
-aws(){
+_aws(){
     docker run -it --rm \
      -v "${HOME}/.aws:/root/.aws" \
      --log-driver none \
      --name aws \
      $MY_HUB/awscli "$@"
 }
-terraform(){
+_terraform(){
   docker run -it --rm \
     -v "$PWD:/tf" \
     --workdir /tf \
     --name terraform \
     hashicorp/terraform:light "$@"
 }
-gradle(){
+_gradle(){
   docker run -it --rm \
     -u "$(id -u):$(id -g)"\
     -v "$PWD:/project" \
@@ -22,7 +22,7 @@ gradle(){
     --name gradle \
     gradle gradle
 }
-gitsome(){
+_gitsome(){
   docker run -it --rm \
   -v $(pwd):/src/ \
   -v ${HOME}/.gitsomeconfig:/root/.gitsomeconfig\
@@ -30,7 +30,7 @@ gitsome(){
   --name gitsome \
   mariolet/gitsome
 }
-cloud-custodian(){
+_cloud-custodian(){
   // fixme:
   local DOCKER=cloud-custodian
   #curl -sLo /tmp/custodian-ec2-stop.yaml https://gist.githubusercontent.com/atrakic/597faae64cb0ec7bea8d3c02e22cf159/raw/b28a9c8acf81cb4a0dca4844ef1a84111e45ad60/custodian-ec2-stop.yaml
@@ -45,7 +45,7 @@ cloud-custodian(){
 # Detached daemons
 ##
 
-nginx(){
+_nginx(){
     docker run -d \
       --restart always \
       -v "${HOME}/.nginx:/etc/nginx" \
@@ -54,14 +54,14 @@ nginx(){
       nginx
 }
 
-postgresqld() {
+_postgresqld() {
   local DOCKER=postgresqld
   docker run -d \
     --name "$DOCKER" \
     -e POSTGRES_PASSWORD=admin \
     postgres:11-alpine
 }
-mysqld(){
+_mysqld(){
   local DOCKER=mysqld
     docker run -d \
      --name "$DOCKER" \
@@ -70,7 +70,7 @@ mysqld(){
      -p 3306:3306 \
      mysql:5.7.24
 }
-cadvisor() {
+_cadvisor() {
   local DOCKER=cadvisor
   docker run -d \
     --name "$DOCKER" \
@@ -82,7 +82,7 @@ cadvisor() {
     -P \
     google/"$DOCKER":latest
 }
-jenkins-evergreen() {
+_jenkins-evergreen() {
   local DOCKER=jenkins-evergreen
   #curl -sLo /tmp/jenkins.yaml https://raw.githubusercontent.com/Praqma/praqma-jenkins-casc/master/jenkins.yaml \
   docker volume create "$DOCKER-data" && \
@@ -99,7 +99,7 @@ jenkins-evergreen() {
     #-e CASC_JENKINS_CONFIG=/tmp/jenkins.yaml \
   docker exec "$DOCKER" cat /evergreen/data/jenkins/home/secrets/initialAdminPassword
 }
-drone-server(){
+_drone-server(){
   // fixme:
   local DOCKER=drone-server
   local DRONE_SECRET=foo
@@ -126,7 +126,7 @@ drone-server(){
     --hostname "$DOCKER"\
   drone/drone:0.8
 }
-drone-agent(){
+_drone-agent(){
   // fixme: depends on
   local DRONE_SECRET=foo
   docker pull drone/agent:0.8 && \
@@ -138,7 +138,7 @@ drone-agent(){
     -e DRONE_SECRET=${DRONE_SECRET} \
     drone/agent:0.8
 }
-jenkins-lts(){
+_jenkins-lts(){
   local DOCKER=jenkins
   docker volume create "${DOCKER}-lts-data"
   docker run -d\
