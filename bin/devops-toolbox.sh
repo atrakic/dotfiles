@@ -138,6 +138,10 @@ function install_packer() {
   fi
 }
 
+function install_likerd_cli() {
+    curl -sL https://run.linkerd.io/install | sh
+}
+
 function main() {
   mkdir -p "$DIR" || exit 1
   printf "${green}Installing toolbox on: $DIR${neutral}\n"
@@ -152,6 +156,7 @@ function main() {
   install_vault
   install_terraform
   install_packer
+  install_likerd_cli
 
   cd "$DIR"
   other_bins="https://storage.googleapis.com/bin.kuar.io/cfssl
