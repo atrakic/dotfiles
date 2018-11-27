@@ -159,11 +159,12 @@ function main() {
   install_likerd_cli
 
   cd "$DIR"
-  other_bins="https://storage.googleapis.com/bin.kuar.io/cfssl
-    https://storage.googleapis.com/bin.kuar.io/cfssljson"
+  declare -a other_bins=("https://storage.googleapis.com/bin.kuar.io/cfssl"
+    "https://storage.googleapis.com/bin.kuar.io/cfssljson"
+    "https://github.com/cloudflare/cloudflare-go/releases/download/v0.8.5/flarectl.linux.amd64")
 
   for url in "${other_bins[@]}"; do
-    curl -sO "$url" && chmod +x $DIR/$bin/*
+    curl '-#' -fL -O -sO "$url" && chmod +x $DIR/$bin/*
   done
 
   echo "$DIR"
