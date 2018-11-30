@@ -170,8 +170,8 @@ function main() {
   echo "$DIR"
   export PATH=$DIR:$PATH
 
-  test "$(which pip)" && pip install --upgrade pip
-  test "$(which pip)" && pip install --user awscli ansible request
+  test "$(which pip)" && pip install --upgrade pip setuptools wheel
+  test "$(which pip)" && pip install --user awscli ansible request awscli 
 }
 
 main "$@"
