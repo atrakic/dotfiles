@@ -167,6 +167,9 @@ function main() {
     curl '-#' -fL -O -sO "$url" && chmod +x $DIR/$bin/*
   done
 
+  # https://rexrayconfig.cfapps.io/
+  curl -sSL https://rexray.io/install | sh
+
   echo "$DIR"
   export PATH=$DIR:$PATH
 
