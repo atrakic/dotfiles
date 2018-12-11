@@ -1,6 +1,5 @@
 # __terragrunt__
 
-alias terragrunt="tg"
 tg() {
   <<TG
 #!/bin/bash
@@ -26,6 +25,13 @@ then
    SSH_VOLUME="--volume $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent"
 fi
 
+# https://github.com/gruntwork-io/terragrunt/issues/432
+filter="nevermind"
+if [ -n "${TG_SILENT}" ];then
+  filter="\[terragrunt\]|groupadd|useradd"
+  # Usage: `TG_SILENT=1 tg state pull | jq '.'`
+fi
+
 docker run -it --rm \
     --workdir $(pwd) \
     --volume ${HOME}:/home/${USER}:Z \
@@ -34,10 +40,11 @@ docker run -it --rm \
     --env USERGID=$(id -g) \
     --env USERUID=$(id -u) \
     $SSH_VOLUME \
-   608844984558.dkr.ecr.eu-west-1.amazonaws.com/aws:latest /run.sh terragrunt "$@"
+   608844984558.dkr.ecr.eu-west-1.amazonaws.com/aws:latest /run.sh terragrunt "$@" | egrep -v "${filter}"
 TG
 }
 
+alias terragrunt="tg"
 export TF_LOG=info
 
 alias tg-plan="terragrunt plan"
@@ -56,6 +63,7 @@ alias tg-destroy-all="terragrunt destroy-all --terragrunt-non-interactive -force
 alias tg-output="terragrunt output"
 alias tg-show="terragrunt show"
 alias tg-state-list="terragrunt state list"
+alias tg-state-pull='terraform state pull' # exports in json
 alias tg-force-unlock="terragrunt force-unlock" # $<id>
 
 alias tg-show-find-execdir="find . -name terraform.tfvars -execdir terragrunt show {} ';'"
@@ -65,6 +73,7 @@ alias tg-walk-apply-all="f() {for i in $@;do echo '$i'; pushd '$i';tg apply-all 
 
 alias tg-example='f() { echo Your arg was $@ };f'
 alias tg-foo='TF_VAR_foo_1=bar_1 TF_VAR_foo_2=bar_2 tg apply --terragrunt-source-update --terragrunt-non-interactive'
+
 
 alias tf-validate="terraform validate -check-variables=false"
 alias tf-fmt="terraform fmt"
