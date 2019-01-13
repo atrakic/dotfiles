@@ -105,4 +105,4 @@ eval "$(direnv hook zsh)"
 NPM_CONFIG_PREFIX=~/.npm-global
 
 alias cdgitroot="cd $(git rev-parse --show-toplevel)"
-
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
