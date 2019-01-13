@@ -57,11 +57,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# admir: 
-source /usr/share/git-flow/git-flow-completion.zsh
-
-source /usr/share/autojump/autojump.sh 
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -90,19 +85,20 @@ source /usr/share/autojump/autojump.sh
 export GOPATH=$HOME/work
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-export BUP_DIR=/data/.backup/.bup
-
-#AWSume alias to source the AWSume script
-alias awsume=". awsume"
-
-# apt-get install -y direnv
-eval "$(direnv hook zsh)"
-
-# eval `ssh-agent`; ssh-add ~/.ssh/*rsa; ssh-add ~/.ssh/_skm/*rsa 
-
 # npm local
 #export PATH=~/.npm-global/bin:$PATH
 NPM_CONFIG_PREFIX=~/.npm-global
 
-alias cdgitroot="cd $(git rev-parse --show-toplevel)"
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+# apt-get install -y bup
+export BUP_DIR=/data/.backup/.bup
+
+# apt-get install -y direnv
+which direnv &>/dev/null && eval "$(direnv hook zsh)"
+
+# apt-get install -y autojump
+source /usr/share/autojump/autojump.sh
+
+which hcloud &>/dev/null && source <(hcloud completion zsh)
+which helm &>/dev/null && source <(helm completion zsh)
+
+alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'

@@ -1,5 +1,5 @@
 # Dotfiles
-This repository contains configuration files used in Linux env.
+This repository contains my configuration files used in Linux env.
 
 ## Prerequisites
 - git
@@ -10,13 +10,24 @@ To install, run:
 
 ```console
 
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 echo ".cfg" >> .gitignore
 
 git clone --bare https://github.com/atrakic/dotfiles.git $HOME/.cfg
 
-config checkout
+dotconfig checkout
+
+```
+
+# Add/edit with config files
+
+```console
+
+dotconfig add .foo/bar_config
+dotconfig commit -m "Added .foo/bar_config
+dotconfig push
+...
 
 ```
 
