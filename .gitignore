@@ -1,4 +1,6 @@
 
+.cfg
+
 # Created by https://www.gitignore.io/api/maven,python,clojure,terraform,vim
 
 ### Vim ###
@@ -158,5 +160,3 @@ venv.bak/
 ### Terraform Patch ###
 # End of https://www.gitignore.io/api/maven,python,clojure,terraform
 
-.build-harness
-build-harness/
