@@ -9,6 +9,7 @@
 # cd $brainstormr
 
 if [ -d "$HOME/.linkerd2" ]; then export PATH=$PATH:$HOME/.linkerd2/bin; fi
+if [ -d "$HOME/.jx/bin" ]; then export PATH=$PATH:$HOME/.jx/bin; fi
 
 DEVBOX_HOME="/opt/toolbox"
 if [ -d "$DEVBOX_HOME/bin" ]; then 
