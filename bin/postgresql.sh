@@ -4,6 +4,8 @@ set -e
 
 DOCKER=postgres
 
+docker pull ${DOCKER}
+
 docker volume create "${DOCKER}"-data
 
 docker run -it -d \
