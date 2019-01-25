@@ -24,6 +24,9 @@ main() {
   psql_current_database)
     psql -tAc 'SELECT current_database();'
     ;;
+  pg_roles)
+    psql -tAc "SELECT rolname FROM pg_roles;"
+    ;;
   pg_databases)
     psql -tAc "select * from pg_database;"
     ;;
