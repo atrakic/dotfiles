@@ -8,9 +8,9 @@ POSTGRES_USER="test"
 
 docker pull ${DOCKER}
 
-docker volume rm "${DOCKER}"-data
-docker volume create "${DOCKER}"-data
+if [ $(docker inspect --format='{{.State.Running}}' $DOCKER) ];then docker stop ${DOCKER}; docker volume rm "${DOCKER}"-data; fi
 
+docker volume create "${DOCKER}"-data
 docker run -it -d \
     --label "$DOCKER" \
     --name "$DOCKER" \
@@ -21,13 +21,20 @@ docker run -it -d \
     -v "${DOCKER}"-data:/var/lib/postgresql/data \
   ${DOCKER}
 
+
+while ! docker inspect --format='{{.State.Running}} ' $DOCKER; do sleep 1; done  
+while ! nc -z 0.0.0.0 5432; do sleep 1; done
+
+
 export PGHOST="0.0.0.0"
 export PGUSER="${POSTGRES_USER}"
 export PGPASSWORD="${POSTGRES_PASSWORD}"
 export PGDATABASE="postgres"
 
+# Testing login from local client
+# psql -v ON_ERROR_STOP=1 -tAc "SELECT current_user;" 
 
-# Ansible setup
+# Ansible 
 playbook_file="/tmp/playbook.yml"
 /bin/cat <<EOL | tee ${playbook_file}
 ---
@@ -46,8 +53,6 @@ playbook_file="/tmp/playbook.yml"
   - name: Create db
     postgresql_db: >
       encoding=UTF-8
-      lc_collate='da_DK.utf8'
-      lc_ctype='da_DK.utf8'
       template='template0'
       name={{dbname}}
       state=present
@@ -60,6 +65,7 @@ playbook_file="/tmp/playbook.yml"
       db={{dbname}}
       name={{dbuser}}
       priv="CONNECT"
+      encrypted='yes'
       password="{{dbpass}}"
       no_password_changes='yes'
       state=present
@@ -71,8 +77,9 @@ playbook_file="/tmp/playbook.yml"
     postgresql_user: >
       db={{dbname}}
       name={{dbuser}}
-      state=present
       password="{{dbpass}}"
+      encrypted='yes'
+      state=present
       role_attr_flags="LOGIN,CREATEDB"
       login_host={{login_host}}
       login_password={{login_password}}
@@ -89,18 +96,6 @@ playbook_file="/tmp/playbook.yml"
       login_password={{login_password}}
       login_user={{login_user}}
 
-  - name: Ensure extensions has been installed
-    postgresql_ext: >
-      name="{{item}}"
-      state=present
-      db={{dbname}}
-      login_host={{login_host}}
-      login_password={{login_password}}
-      login_user={{login_user}}
-    with_items:
-    - postgis
-    - fuzzystrmatch
-
   - name: Fix permissions
     shell: |
       PGHOST={{login_host}} PGDATABASE=postgres PGUSER={{login_user}} PGPASSWORD={{login_password}} psql -tAc '{{item}}'
@@ -116,15 +111,16 @@ playbook_file="/tmp/playbook.yml"
       PGHOST={{login_host}} PGDATABASE={{dbname}} PGUSER={{dbuser}} PGPASSWORD={{dbpass}} psql -tAc '{{item}}'
     with_items:
     - "SELECT current_user;"
-      #    - "ALTER DEFAULT PRIVILEGES IN SCHEMA {{dbname}} GRANT SELECT ON TABLES TO rlereaders;"
 EOL
 
-login_host=$PGHOST
-login_password=$PGPASSWORD 
-login_user=$PGUSER
+login_host="${PGHOST}"
+login_password="${PGPASSWORD}"
+login_user="${PGUSER}"
+
+dbname="foo"
+dbuser="foo"
+dbpass="foo"
 
 echo "ANSIBLE_NOCOLOR=true PYTHONUNBUFFERED=1 ansible-playbook -vvv --connection=local \
   ${playbook_file} \
-  --extra-vars='login_host=${login_host} login_password=${login_password} login_user=${login_user}' \
-  --extra-vars='dbname=${dbname} dbuser=${dbuser} dbpass=${dbpass}'
-
+  --extra-vars='login_host=${login_host} login_password=${login_password} login_user=${login_user}    dbname=${dbname} dbuser=${dbuser} dbpass=${dbpass}'" | sh
