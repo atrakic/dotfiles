@@ -18,4 +18,4 @@ docker run -it -d \
 #    --restart=always \
 #    -v "$(pwd)/seed":/var/jenkins_home/workspace/seed \
 #    -v "$HOME":/home \
-# docker exec evergreen cat /evergreen/data/jenkins/home/secrets/initialAdminPassword
+# docker exec $DOCKER cat /evergreen/data/jenkins/home/secrets/initialAdminPassword
