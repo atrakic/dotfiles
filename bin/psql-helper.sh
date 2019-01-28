@@ -30,6 +30,9 @@ main() {
   pg_databases)
     psql -tAc "select * from pg_database;"
     ;;
+  pg_stat_activity)
+   psql -tAc "SELECT * FROM pg_stat_activity ORDER BY pid;"
+   ;;
   psql_database_size)
     psql -tAc "SELECT pg_database.datname, pg_database_size(pg_database.datname), pg_size_pretty(pg_database_size(pg_database.datname))\
     FROM pg_database\
