@@ -79,3 +79,5 @@ function gitcommitall() {
   #git pull
   #git push
 }
+
+alias ansible-localhost-fact="ansible localhost -m setup"
