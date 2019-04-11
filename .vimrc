@@ -22,7 +22,11 @@ set smartcase                   " ... unless they contain at least one capital l
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-sensible'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/nanotech/jellybeans.vim'
+" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
 call plug#end()
 
 set background=dark

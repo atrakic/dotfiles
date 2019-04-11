@@ -197,3 +197,5 @@ export AWS_DEFAULT_PROFILE=awsadmir
 # ex: ts=4 sw=4 et filetype=sh
 source ~/.autoenv/activate.sh
 alias config='/usr/bin/git --git-dir=/home/admir/.cfg/ --work-tree=/home/admir'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
