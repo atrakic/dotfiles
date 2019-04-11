@@ -104,4 +104,8 @@ which hcloud &>/dev/null && source <(hcloud completion zsh)
 which helm &>/dev/null && source <(helm completion zsh)
 
 alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$HOME/.local/bin:$PATH
+
+AWS_DEFAULT_REGION=eu-west-1
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
