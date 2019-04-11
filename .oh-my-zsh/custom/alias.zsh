@@ -80,4 +80,7 @@ function gitcommitall() {
   #git push
 }
 
+# https://unix.stackexchange.com/questions/9301/make-diff-use-full-terminal-width-in-side-by-side-mode
+alias diff='diff -W $(( $(tput cols) - 2 ))'
+
 alias ansible-localhost-fact="ansible localhost -m setup"
