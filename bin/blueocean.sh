@@ -21,6 +21,8 @@ docker run -it -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$HOME":/home \
     jenkinsci/$DOCKER
-#    --privileged=true \
-#    -v "$(pwd)/seed":/var/jenkins_home/workspace/seed \
-# curl --user 'username:password' --data-urlencode "script=$(< ./somescript.groovy)" https://localhost:8080/scriptText
+
+# 
+docker exec -it $DOCKER apk add gettext make
+PASS=$(docker exec -it $DOCKER cat /var/jenkins_home/secrets/initialAdminPassword)
+# curl --user 'admin:$PASS' --data-urlencode "script=$(< ./init.groovy)" https://localhost:8080/scriptText
