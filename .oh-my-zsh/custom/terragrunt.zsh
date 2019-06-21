@@ -46,7 +46,7 @@ TG
 }
 
 alias terragrunt="tg"
-export TF_LOG=info
+#export TF_LOG=info
 export TG_SILENT=1
 
 alias tg-plan="terragrunt plan"
