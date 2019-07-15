@@ -45,6 +45,7 @@
   co-yesterday-master = !git checkout master@{yesterday}
   merged = !git branch -a --merged  # list merged branches
   rebase-master = !git pull --rebase upstream master # Rebase your changes on top of the remote master
+  pl = pull —rebase
 
   # [apt-get install -y git-extras]
   root = !git git-root
@@ -61,6 +62,7 @@
   undo-howto = !curl -s ohshitgit.com | lynx --stdin
   localgit = !mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
 	gitroot = !pwd
+	exec = "!exec "
 
 [pull]
   rebase = true
@@ -72,7 +74,7 @@
   mnemonicprefix = true
 [branch]
   autosetupmerge = true
-  autosetuprebase = always
+	autosetuprebase = always
 [merge]
   stat = true
   tool = xxdiff
