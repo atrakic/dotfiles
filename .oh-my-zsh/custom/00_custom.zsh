@@ -14,5 +14,4 @@ if [ -d "$HOME/.jx/bin" ]; then export PATH=$PATH:$HOME/.jx/bin; fi
 DEVBOX_HOME="/opt/toolbox"
 if [ -d "$DEVBOX_HOME/bin" ]; then 
   export PATH="$DEVBOX_HOME/bin:$PATH"; 
-  minikube config set WantUpdateNotification false
 fi
