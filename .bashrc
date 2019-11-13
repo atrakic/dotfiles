@@ -111,12 +111,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# <Stil.dk> 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/stil/bin:$HOME/bin:$PATH"
-fi
-
 # bash completion for check_mk
 if [ -f ~/.check_mk.d/check_mk.completion.bash ];then
   source ~/.check_mk.d/check_mk.completion.bash 
@@ -132,16 +126,6 @@ if [ -f /usr/share/bash-completion/completions/gitk ]; then
   source /usr/share/bash-completion/completions/gitk; 
 fi 
 
-# The next line updates PATH for the Google Cloud SDK.
-#if [ -f /home/admir/local/google-cloud-sdk/path.bash.inc ]; then
-#  source '/home/admir/local/google-cloud-sdk/path.bash.inc'
-#fi
-
-# The next line enables shell command completion for gcloud.
-#if [ -f /home/admir/local/google-cloud-sdk/completion.bash.inc ]; then
-#  source '/home/admir/local/google-cloud-sdk/completion.bash.inc'
-#fi
-
 if [ -f $HOME/.terraform.d/terraform.completion.bash ]; then 
   source $HOME/.terraform.d/terraform.completion.bash
 fi 
@@ -150,9 +134,6 @@ if [ -f $HOME/bin/ansible-completion.bash.txt ]; then
   source $HOME/bin/ansible-completion.bash.txt
   export ANSIBLE_NOCOWS=1
 fi 
-
-# added by travis gem
-[ -f /home/admir/.travis/travis.sh ] && source /home/admir/.travis/travis.sh
 
 # echo "profile $(basename $0)" 
 
@@ -168,34 +149,18 @@ fi
 
 # easygit package
 #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-PS1='\[\e]0;\u@\h: \w\a\]$(__git_ps1 "(%s)")\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#PS1='\[\e]0;\u@\h: \w\a\]$(__git_ps1 "(%s)")\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # ssh-key with passphrase, with keychain 
 # eval `keychain --eval id_rsa`
 
-### AWS setup 
-complete -C '$(which aws_completer)' aws
-#export HTTPS_PROXY=http://username:password@w.x.y.z:m
-#export AWS_SECRET_ACCESS_KEY=""
-#export AWS_ACCESS_KEY_ID=""
-# A session token is only required if you are using temporary security credentials
-#export AWS_SESSION_TOKEN= 
-# export AWS_DEFAULT_REGION=
-# path to a CLI config file
-# export AWS_CONFIG_FILE=
-export AWS_DEFAULT_PROFILE=awsadmir
-#export NO_PROXY=169.254.169.254
-# __done__ 
-
-
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
-source ~/.autoenv/activate.sh
+if [ -f $HOME/.autoenv/activate.sh ]; then
+    source $HOME/.autoenv/activate.sh
+fi 
 alias config='/usr/bin/git --git-dir=/home/admir/.cfg/ --work-tree=/home/admir'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+  startx
+fi
