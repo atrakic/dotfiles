@@ -11,9 +11,9 @@ export HISTCONTROL=ignoredups;
 export HISTIGNORE=" *:ls:cd:cd -:pwd:exit:date:* --help:* -h:pony:pony add *:pony update *:pony save *:pony ls:pony ls *";
 
 export LANG="LANG=en_GB.UTF-8";
-export LC_ALL="en_US.UTF-8";
+export LC_ALL="en_GB.UTF-8";
 
-# Don’t clear the screen after quitting a manual page
+# Dont clear the screen after quitting a manual page
 export MANPAGER="less -X";
 
 # if it's an ssh session export GPG_TTY
@@ -24,3 +24,10 @@ fi
 
 # set xdg data dirs for dmenu to source
 export XDG_DATA_DIRS=/usr/share/
+
+# apt-get install -y bup
+[ -d /data/.backup/.bup ] && export BUP_DIR=/data/.backup/.bup
+
+# golang
+export GOPATH=$HOME/work
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin

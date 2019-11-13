@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 
-# go 
+# golang 
 export GOPATH=$HOME/work
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
@@ -96,19 +96,19 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 #export PATH=~/.npm-global/bin:$PATH
 NPM_CONFIG_PREFIX=~/.npm-global
 
-# apt-get install -y bup
-export BUP_DIR=/data/.backup/.bup
-
 # apt-get install -y direnv
 which direnv &>/dev/null && eval "$(direnv hook zsh)"
 
 # apt-get install -y autojump
-source /usr/share/autojump/autojump.sh
+[ -f  /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
 
 which hcloud &>/dev/null && source <(hcloud completion zsh)
 which helm &>/dev/null && source <(helm completion zsh)
 
 alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
 export PATH=$HOME/.local/bin:$PATH
 
+[ -f ~/.exports ] && source ~/.exports
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.dockerfunc ] && source ~/.dockerfunc
