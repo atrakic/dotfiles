@@ -86,15 +86,6 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-
-# golang 
-export GOPATH=$HOME/work
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-
-# npm local
-#export PATH=~/.npm-global/bin:$PATH
-NPM_CONFIG_PREFIX=~/.npm-global
 
 # apt-get install -y direnv
 which direnv &>/dev/null && eval "$(direnv hook zsh)"
@@ -106,8 +97,6 @@ which hcloud &>/dev/null && source <(hcloud completion zsh)
 which helm &>/dev/null && source <(helm completion zsh)
 
 alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-export PATH=$HOME/.local/bin:$PATH
 
 [ -f ~/.exports ] && source ~/.exports
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

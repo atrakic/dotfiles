@@ -82,9 +82,22 @@ nginx_config(){
 # Container Aliases
 #
 
+nginx(){
+  del_stopped nginx
+  docker run -d \
+    --restart always \
+    -v "${HOME}/.nginx:/etc/nginx" \
+    --net host \
+    --name nginx \
+    nginx
+
+  # add domain to hosts & open nginx
+  sudo hostess add jess 127.0.0.1
+}
+
 evergreen(){
   local DOCKER=evergreen
-	del_stopped $DOCKER
+  del_stopped $DOCKER
   docker volume create "${DOCKER}"-data
   docker run -it -d \
     --name "$DOCKER" \
@@ -101,9 +114,9 @@ evergreen(){
 }
 terraforming() {
   docker run --rm -it \
-  -e AWS_REGION=$AWS_DEFAULT_REGION  \
-  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e "AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)" \
+  -e "AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)" \
+  -e "AWS_DEFAULT_REGION=$(aws configure get region)" \
    quay.io/dtan4/terraforming:latest terraforming "$@"
 }
 portainer(){
@@ -137,9 +150,9 @@ terraform-light(){
   -v /tmp:/tmp \
   --volume "$(pwd):/terraform" \
   --workdir "/terraform" \
-  -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
-  -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
-  -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" \
+  -e "AWS_ACCESS_KEY_ID=$(aws configure get aws__access_key_id)" \
+  -e "AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)" \
+  -e "AWS_DEFAULT_REGION=$(aws configure get region)" \
   -e SSH_AUTH_SOCK \
   "hashicorp/terraform:light" "$@"
 }
