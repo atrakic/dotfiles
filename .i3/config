@@ -126,9 +126,8 @@ bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
 bindsym XF86MonBrightnessUp exec sudo light -A 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
-
 # numlock on boot
-# exec_always --no-startup-id numlockx on
+exec_always --no-startup-id numlockx on
 
 #locking the screen ( should be the exact size of the screen )
 #bindsym $mod+p exec i3lock -i "PATH_TO_IMAGE.png"
@@ -168,6 +167,16 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+# https://medium.com/@labruillere/minimal-i3-ubuntu-18-04-ba1bb31436ff
+# remove the windows border:
+#new_window 1pixel
+for_window [class="^.*"] border pixel 1
+# class                 border  backgr. text    indicator
+client.focused          #000000 #555555 #ffffff #000000
+client.focused_inactive #000000 #000000 #ffffff #000000
+client.unfocused        #000000 #000000 #aaaaaa #000000
+client.urgent           #000000 #000000 #ffffff #000000
+
 bindsym $mod+r mode "resize"
 bindsym $mod+Shift+g exec "i3lock -c 000000"
 
@@ -175,7 +184,7 @@ bindsym $mod+Shift+g exec "i3lock -c 000000"
 # finds out, if available)
 bar {
         position top
-        status_command i3status # --config ~/.config/i3/itstatus
+        status_command i3status # --config ~/.config/i3/i3status
         tray_output primary
 }
 
