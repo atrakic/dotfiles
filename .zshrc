@@ -97,6 +97,7 @@ which hcloud &>/dev/null && source <(hcloud completion zsh)
 which helm &>/dev/null && source <(helm completion zsh)
 
 alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias python-examples='surf /usr/share/doc/python3-examples/html/index.html'
 
 [ -f ~/.exports ] && source ~/.exports
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

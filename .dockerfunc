@@ -144,18 +144,18 @@ minimal-notebook(){
       jupyter/$DOCKER
 }
 terraform-light(){
-  local DOCKER=minimal-notebook
   docker run -it --rm \
   -v "${HOME}:${HOME}:ro" \
   -v /tmp:/tmp \
   --volume "$(pwd):/terraform" \
   --workdir "/terraform" \
-  -e "AWS_ACCESS_KEY_ID=$(aws configure get aws__access_key_id)" \
+  -e "AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)" \
   -e "AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)" \
   -e "AWS_DEFAULT_REGION=$(aws configure get region)" \
   -e SSH_AUTH_SOCK \
   "hashicorp/terraform:light" "$@"
 }
+alias tf="terraform-light"
 pgadmin4() {
   local DOCKER=pgadmin4
 	del_stopped $DOCKER
