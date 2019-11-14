@@ -1,20 +1,9 @@
 #!/bin/bash
 
-set -eux pipefail
+# set -eu
 
-#AuthorizedKeysCommand /etc/skeys/keylist %u
-#AuthorizedKeysCommandUser uucp
+#AuthorizedKeysCommand /usr/local/bin/userkeys.sh %u
+#AuthorizedKeysCommandUser nobody
 
 USER=${1:-atrakic}
-
-[ $# -ne 1 ] && { echo "Usage: $0 userid" >&2; exit 1; }
-
-case "$USER" in 
-  atrakic)
-  curl -sf https://api.github.com/users/atrakic/keys |jq -r '.[].key'
-  ;;
-  *)
-  keyfile="/var/lib/keys/$USER.pub"
-  [ -f "$keyfile" ] && cat "$keyfile"
-	;;
-esac
+curl -sf https://api.github.com/users/"$USER"/keys |jq -r '.[].key'
