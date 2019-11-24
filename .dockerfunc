@@ -72,16 +72,42 @@ nginx_config(){
 	docker restart nginx
 
 	# add host to /etc/hosts
-	hostess add "$server" 127.0.0.1
+	#hostess add "$server" 127.0.0.1
 
 	# open browser
-	browser-exec "http://${server}"
+	#browser-exec "http://${server}"
 }
 
 #
 # Container Aliases
 #
 
+local-registry(){
+  local DOCKER=local-registry
+	del_stopped $DOCKER
+  docker volume create "${DOCKER}"-data
+  docker run -d \
+    --name $DOCKER \
+    --restart always \
+    -v "${DOCKER}"-data:/var/lib/registry \
+    -p 5000:5000 \
+    registry:2
+}
+alias local-registry-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' local-registry)"
+
+cadvisor(){
+  docker run -d \
+    --restart always \
+    --name cadvisor \
+    -v /:/rootfs:ro \
+    -v /var/run:/var/run:rw \
+    -v /sys:/sys:ro  \
+    -v /var/lib/docker/:/var/lib/docker:ro \
+    -p 1234:8080 \
+    google/cadvisor
+
+  echo "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' cadvisor)"
+}
 nginx(){
   del_stopped nginx
   docker run -d \
@@ -92,9 +118,8 @@ nginx(){
     nginx
 
   # add domain to hosts & open nginx
-  sudo hostess add jess 127.0.0.1
+  #sudo hostess add jess 127.0.0.1
 }
-
 evergreen(){
   local DOCKER=evergreen
   del_stopped $DOCKER
@@ -113,6 +138,7 @@ evergreen(){
 # docker exec $DOCKER cat /evergreen/data/jenkins/home/secrets/initialAdminPassword
 }
 terraforming() {
+  local DOCKER=terraforming
   docker run --rm -it \
   -e "AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)" \
   -e "AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)" \
@@ -188,7 +214,8 @@ phpmyadmin(){
 }
 alias mysqladmin="phpmyadmin"
 netdata(){
-  local DOCKER=netdat
+  local DOCKER=netdata
+	del_stopped $DOCKER
   docker run -d --name=$DOCKER \
   -p 19999:19999 \
   -v /etc/passwd:/host/etc/passwd:ro \
@@ -200,4 +227,38 @@ netdata(){
   --security-opt apparmor=unconfined \
   netdata/netdata
 }
+unbound(){
+  echo "sudo systemctl stop systemd-resolved.service"
+  local DOCKER=unbound
+	del_stopped $DOCKER
+  docker run -d \
+    --name $DOCKER \
+    -p 8153:53/udp \
+    --restart=always \
+    mvance/unbound:latest
+    #-v $(HOME)/.local/config/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro \
+}
+pihole(){
+  local DOCKER=pihole
+  del_stopped $DOCKER
 
+  relies_on unbound
+  docker run -d \
+    --name pihole \
+    -p 53:53/tcp \
+    -p 53:53/udp \
+    -p 8182:80 \
+    -p 8183:443 \
+    -e TZ="Europe/Copenhagen" \
+    -v "$(pwd)/etc-pihole/:/etc/pihole/" \
+    -v "$(pwd)/etc-dnsmasq.d/:/etc/dnsmasq.d/" \
+    --dns=127.0.0.1 \
+    --dns=1.1.1.1 \
+    --cap-add=NET_ADMIN \
+    --restart=unless-stopped \
+    pihole/pihole:latest
+}
+alias pihole-pass='docker logs pihole 2>/dev/null| grep random'
+alias pihole-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)"
+alias pihole-url="echo https://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"
+alias pihole-admin="xdg-open http://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"

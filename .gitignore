@@ -284,3 +284,5 @@ tags
 [._]*.un~
 
 # End of https://www.gitignore.io/api/maven,python,flask,django,ansible,terraform,vim
+
+~/.github
