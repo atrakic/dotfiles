@@ -92,6 +92,10 @@ local-registry(){
     -v "${DOCKER}"-data:/var/lib/registry \
     -p 5000:5000 \
     registry:2
+  #usage:
+  #docker pull nginx:latest
+  #docker tag nginx:latest $DOCKER:5000/nginx:latest
+  #docker push $DOCKER:5000/nginx:latest
 }
 alias local-registry-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' local-registry)"
 
