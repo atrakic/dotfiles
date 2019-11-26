@@ -97,7 +97,7 @@ local-registry(){
   #docker tag nginx:latest $DOCKER:5000/nginx:latest
   #docker push $DOCKER:5000/nginx:latest
 }
-alias local-registry-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' local-registry)"
+#alias local-registry-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' local-registry)"
 
 cadvisor(){
   docker run -d \
@@ -261,8 +261,7 @@ pihole(){
     --cap-add=NET_ADMIN \
     --restart=unless-stopped \
     pihole/pihole:latest
+    echo "Add in /etc/resolv.conf:  nameserver: $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)"
+    echo "Admin https://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"
 }
 alias pihole-pass='docker logs pihole 2>/dev/null| grep random'
-alias pihole-ip="echo $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)"
-alias pihole-url="echo https://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"
-alias pihole-admin="xdg-open http://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"
