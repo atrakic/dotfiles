@@ -98,7 +98,7 @@ which helm &>/dev/null && source <(helm completion zsh)
 
 alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias python-examples='surf /usr/share/doc/python3-examples/html/index.html'
-alias localhost-run-web='ssh -R 80:localhost:80 ssh.localhost.run'
+alias pwd-localhost-run='python3 -m http.server &; ssh -R 80:localhost:8000 ssh.localhost.run'
 
 [ -f ~/.zshenv ] && source ~/.zshenv
 [ -f ~/.exports ] && source ~/.exports

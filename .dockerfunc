@@ -248,7 +248,7 @@ pihole(){
 
   relies_on unbound
   docker run -d \
-    --name pihole \
+    --name $DOCKER \
     -p 53:53/tcp \
     -p 53:53/udp \
     -p 8182:80 \
@@ -265,3 +265,11 @@ pihole(){
     echo "Admin https://$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pihole)/admin/"
 }
 alias pihole-pass='docker logs pihole 2>/dev/null| grep random'
+postwoman() {
+  local DOCKER=postwoman
+  del_stopped $DOCKER
+  docker run -d \
+    --name $DOCKER \
+    -p 3000:3000 \
+    liyasthomas/postwoman:latest
+}
