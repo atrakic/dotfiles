@@ -104,3 +104,10 @@ alias pwd-localhost-run='python3 -m http.server &; ssh -R 80:localhost:8000 ssh.
 [ -f ~/.exports ] && source ~/.exports
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.dockerfunc ] && source ~/.dockerfunc
+
+show_virtual_env() {
+  if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
+    echo "($(basename $VIRTUAL_ENV))"
+  fi
+}
+PS1='$(show_virtual_env)'$PS1
