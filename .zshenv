@@ -4,5 +4,9 @@
 
 # git clone https://github.com/bash-my-aws/bash-my-aws.git ~/.bash-my-aws
 [ -d $HOME/.bash-my-aws/bin ] && export PATH="$HOME/.bash-my-aws/bin:$PATH"
+[ -f $HOME/.bash-my-aws/aliases ] && source ~/.bash-my-aws/aliases
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+[ -f $HOME/.bash-my-aws/bash_completion.sh ] && source ~/.bash-my-aws/bash_completion.sh
 
 [ -d $HOME/.pulumi/bin ] && export PATH="$HOME/.pulumi/bin:$PATH"
