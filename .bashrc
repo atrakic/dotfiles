@@ -83,9 +83,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
@@ -135,31 +132,39 @@ if [ -f $HOME/bin/ansible-completion.bash.txt ]; then
   export ANSIBLE_NOCOWS=1
 fi 
 
-# echo "profile $(basename $0)" 
-
 # ssh-key without passphrase 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval `ssh-agent -s`
   ssh-add
-  # test: 
-  ssh-add -l
 fi
-
-#export PS1='\e[1m\e[31m[\h] \e[32m(\\\$(docker-prompt)) \e[34m\u@{}\e[35m \w\e[0m\n$ '
-
-# easygit package
-#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-#PS1='\[\e]0;\u@\h: \w\a\]$(__git_ps1 "(%s)")\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
-# ssh-key with passphrase, with keychain 
-# eval `keychain --eval id_rsa`
 
 if [ -f $HOME/.autoenv/activate.sh ]; then
     source $HOME/.autoenv/activate.sh
 fi 
+
 alias config='/usr/bin/git --git-dir=/home/admir/.cfg/ --work-tree=/home/admir'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# source kubectl bash completion
+if hash kubectl 2>/dev/null; then
+        # shellcheck source=/dev/null
+        source <(kubectl completion bash)
+fi
+
+# source travis bash completion
+if [[ -f "${HOME}/.travis/travis.sh" ]]; then
+        # shellcheck source=/dev/null
+        source "${HOME}/.travis/travis.sh"
+fi
+
+for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
+        if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+                # shellcheck source=/dev/null
+                source "$file"
+        fi
+done
+unset file
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
   startx
