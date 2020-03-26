@@ -34,7 +34,6 @@
   deleted = log --diff-filter=D --summary
   amend = commit --amend
   git = since-branching
-  rank = shortlog -sn --no-merges
   whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
   stash-unapply = !git stash show -p | git apply -R
   since = !git rev-list ..master HEAD
@@ -57,12 +56,22 @@
   cdroot = "!f() { cd $(git rev-parse --show-toplevel); }; f"
   cherry-pick = "!f() { git rebase $1^ ; }; f" # 1 - commitid
 
+  # LeaderBoards:
+  rank = shortlog -sn --all --no-merges
+  stats = git shortlog -sn --since='10 weeks' --until='2 weeks'
+  word-diff = !git diff --word-diff
+  recent = !git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format="%(refname:short)"
+  everyone = !git log --all --oneline --no-merges # see what everyones been getting up to
+  overview = !git log --all --since='2 weeks' --oneline --no-merges
+  recap = !git log --all --oneline --no-merges --author=atrakic@users.noreply.github.com
+  today = !git log --since=00:00:00 --all --no-merges --oneline --author=atrakic@users.noreply.github.com
+
   # [Funny stuff]:
   git-tip = !docker run -it --rm djoudix/git-tip git-tip
   undo-howto = !curl -s ohshitgit.com | lynx --stdin
   localgit = !mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
-	gitroot = !pwd
-	exec = "!exec "
+  gitroot = !pwd
+  exec = "!exec "
 
 [pull]
   rebase = true
@@ -88,8 +97,6 @@
 [credential "https://git-codecommit.*.amazonaws.com"]
   helper = !aws codecommit credential-helper $@
   UseHttpPath = true
-[commit]
-  template = $HOME/.gitmessage.txt
 [credential]
 	helper = cache --timeout=3600
 [status]
