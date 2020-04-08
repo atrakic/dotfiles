@@ -45,6 +45,7 @@
   merged = !git branch -a --merged  # list merged branches
   rebase-master = !git pull --rebase upstream master # Rebase your changes on top of the remote master
   pl = pull —rebase
+  graph = log --graph --all --decorate --stat --date=iso
 
   # [apt-get install -y git-extras]
   root = !git git-root
