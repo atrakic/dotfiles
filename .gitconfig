@@ -1,13 +1,9 @@
-# .gitconfig
-###
-
 [user]
   name = Admir Trakic
   email = atrakic@users.noreply.github.com
 [core]
   editor = vim
-  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  whitespace = trailing-space,space-before-tab
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eo
   autocrlf = input
   excludesfile = ~/.gitignore
   sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
@@ -23,14 +19,10 @@
   log-pretty = !git log --pretty=oneline
   log-last = !git log -1 HEAD
   log-stat = !git log --stat
-  lghs = !cd ./$GIT_PREFIX && git status -s && git lg|head  # Show status short (paths relative to current dir),and show head of log
-  lgahs = !cd ./$GIT_PREFIX && git status -s && git lga|head # Show status short (paths relative to current dir),and show head of log for all branches - this might not show head for current branch
   sync  = !git fetch -p # synchronize your branch list
   brall = !git branch -a  # see both local and remote branches
-  # git log --author="Jon" --pretty=format:"%h - %an, %ar : %s"
   sort-author = !git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
   stash-all = stash --include-untracked
-  #get_last_file = !git co -- $2
   deleted = log --diff-filter=D --summary
   amend = commit --amend
   whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
@@ -46,7 +38,7 @@
   pl = pull —rebase
   graph = log --graph --all --decorate --stat --date=iso
 
-  # [apt-get install -y git-extras]
+  # apt-get install -y git-extras
   root = !git git-root
   up = "!git remote update -p; git merge --ff-only @{u}" # https://stackoverflow.com/questions/6406762/why-am-i-merging-remote-tracking-branch-origin-develop-into-develop
   undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
@@ -69,9 +61,6 @@
   # [Funny stuff]:
   git-tip = !docker run -it --rm djoudix/git-tip git-tip
   undo-howto = !curl -s ohshitgit.com | lynx --stdin
-  localgit = !mkdir -p /tmp/files && git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
-  gitroot = !pwd
-  exec = "!exec "
 
 [pull]
   rebase = true
