@@ -58,7 +58,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python docker kubectl dotenv aws)
+plugins=(git git-extras python docker kubectl dotenv aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,6 +104,7 @@ alias pwd-localhost-run='python3 -m http.server &; ssh -R 80:localhost:8000 ssh.
 [ -f ~/.exports ] && source ~/.exports
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.dockerfunc ] && source ~/.dockerfunc
+[ -f ~/.kind_completion.zsh ] && source ~/.kind_completion.zsh
 
 show_virtual_env() {
   if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
@@ -111,3 +112,22 @@ show_virtual_env() {
   fi
 }
 PS1='$(show_virtual_env)'$PS1
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+source ~/.bash-my-aws/bash_completion.sh
+alias klocal='KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl'
+
+export PATH=$PATH:$HOME/.linkerd2/bin
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+[ -f ~/.bash-my-aws/bash_completition.sh ] && source ~/.bash-my-aws/bash_completion.sh
+
+# https://raw.githubusercontent.com/ahmetb/kubectl-aliases/master/.kubectl_aliases
+[ -f ~/.kubectl_aliases ] && source \
+        <(cat ~/.kubectl_aliases | sed -r 's/(kubectl.*) --watch/watch \1/g')
+function kubectl() { echo "+ kubectl $@">&2; command kubectl $@; }
