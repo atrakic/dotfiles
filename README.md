@@ -1,12 +1,25 @@
 # Dotfiles
-This repository contains my configuration files used in Linux env.
+My configuration files used in Linux env.
 
-## Prerequisites
-- git
 
-# Install
+## Docker
 
-To install, run:
+Build:
+
+```console
+
+docker-compose build
+```
+
+Run (requires directory with ssh-keys and aws config):
+
+```console
+
+./bin/dotfiles.sh
+
+```
+
+## Install on local machine
 
 ```console
 
@@ -20,7 +33,7 @@ dotconfig checkout
 
 ```
 
-# Add/edit with config files
+## Add/edit config files
 
 ```console
 
@@ -31,5 +44,5 @@ dotconfig push
 
 ```
 
-# Credits
+## Credits
 * https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/

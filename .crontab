@@ -1,6 +1,0 @@
-# For more information see the manual pages of crontab(5) and cron(8)
-# 
-# m h  dom mon dow   command
-@daily export BUP_DIR=/data/.backup/.bup && ME=$(whoami) $(bup index -ux /home/$ME && bup save --strip -q -n $ME /home/$ME &>/dev/null) # Usage: bup ls $ME/latest/ 
-@daily cd ~/Projects/SKM/github && cat .sync.sh|sh &>/dev/null
-@daily cd ~/Projects/github/starred && cat .sync.sh|sh &>/dev/null

@@ -9,4 +9,4 @@ autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 [ -f $HOME/.bash-my-aws/bash_completion.sh ] && source ~/.bash-my-aws/bash_completion.sh
 
-[ -d $HOME/.pulumi/bin ] && export PATH="$HOME/.pulumi/bin:$PATH"
+if [ -e /home/admir/.nix-profile/etc/profile.d/nix.sh ]; then . /home/admir/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

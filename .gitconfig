@@ -63,7 +63,7 @@
 [pull]
   rebase = true
 [push]
-   default = current
+	default = current
 [diff]
   #external = /usr/bin/vimdiff
   renames = copies
@@ -82,7 +82,8 @@
   statusHints = true
   pushNonFastForward = false
 [credential]
-   helper = cache --timeout=3600
+  helper = !aws codecommit credential-helper $@
+  UseHttpPath = true
 [status]
   submoduleSummary = true
 [fetch]

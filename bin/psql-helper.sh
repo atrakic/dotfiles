@@ -2,11 +2,11 @@
 
 set -e
 
-# Usage: link this file with any of switchase bellow.
-# For remote connectsions, make sure you have proper env vars: https://www.postgresql.org/docs/10.6/libpq-envars.html
+# Usage: link this file with any of switcase bellow.
+# For remote connections, make sure you have proper env vars: https://www.postgresql.org/docs/10.6/libpq-envars.html
 
 if [ "${0##*/}" = "psql-helper.sh" ]; then
-  echo "$(basename $0): This script should not be run like this" 1>&2
+  echo "$(basename $0): This script should not run like this" 1>&2
   exit 1
 fi
 

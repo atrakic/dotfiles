@@ -1,0 +1,12 @@
+docker
+docker-compose
+mock
+neovim
+azure-cli
+awscli
+#aws-sam-cli
+#ansible
+
+# dev
+pytest
+requests
