@@ -86,7 +86,9 @@ RUN cd /opt && wget --quiet https://storage.googleapis.com/golang/go${GOVERSION}
   mkdir $GOPATH
 
 ADD ansible/requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt --upgrade
+RUN pip3 install --upgrade pip setuptools wheel \
+  && pip3 install --no-cache-dir -r /tmp/requirements.txt \
+  && rm -rf /root/.cache/pip
 
 # ADD ansible/requirements.yml /tmp/requirements.yml
 # RUN ansible-galaxy install --force -r ansible/requirements.yml --roles-path /etc/ansible/roles
@@ -94,13 +96,13 @@ RUN pip3 install --no-cache-dir -r /tmp/requirements.txt --upgrade
 
 RUN chsh -s /usr/bin/zsh && curl -sL http://install.ohmyz.sh | sh || true
 
+# # install vim-plug
+RUN curl -sfLo /root/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
+  && nvim +PlugInstall +qa
+
 WORKDIR /root
 
 COPY . .
-
-# # install vim-plug
-RUN curl -fLo /root/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
-  && nvim +PlugInstall +qa 
 
 # Set up volumes
 WORKDIR /projects
