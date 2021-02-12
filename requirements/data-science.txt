@@ -1,0 +1,12 @@
+# data-science
+jupyter
+ipython
+numpy
+pandas
+matplotlib
+scikit-learn
+scipy
+pytest
+nbdime
+runipy
+seaborn

@@ -1,0 +1,4 @@
+# cloud
+azure-cli
+awscli
+#aws-sam-cli

@@ -1,0 +1,14 @@
+# base
+requests
+cookiecutter
+docker
+docker-compose
+mock
+neovim
+
+# dev
+pytest
+coverage
+
+# web
+beautifulsoup4

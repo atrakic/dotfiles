@@ -2,26 +2,30 @@
 
 ![DockerCI](https://github.com/atrakic/dotfiles/workflows/DockerCI/badge.svg)
 
-My configuration files used in Linux env (image size ~1.6Gb).
+My configuration files used in Linux env.
 
 ## Features
 - latest Ubuntu
-- nvim editor with custom configuration
+- IDE: nvim editor
 - Golang
 - Pyton3
-- Ansible with collections 
+- Ansible with comunity collections
 - zsh as default shell
 
-## Build and run with Docker + DockerCompose
 
-Build:
+## Usage (image size ~1.6Gb)
+
+## With Docker
+
+Build docker image:
 
 ```console
 
-docker-compose build
+docker-compose build 
+
 ```
 
-Run (requires directory with ssh-keys and aws configs):
+Run container:
 
 ```console
 
@@ -29,7 +33,8 @@ Run (requires directory with ssh-keys and aws configs):
 
 ```
 
-## Install on local machine without docker
+## On local machine without docker
+* Credits: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
 
 ```console
 
@@ -46,18 +51,9 @@ alias dotconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # use alias
 dotconfig checkout
 
-```
-
-## How to add/edit config files
-
-```console
-
+# Add/edit config files
 dotconfig add .foo/bar_config
 dotconfig commit -m "Added .foo/bar_config
 dotconfig push
-...
 
 ```
-
-## Credits
-* https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
