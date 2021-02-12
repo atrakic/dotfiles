@@ -5,30 +5,23 @@
 My configuration files used in Linux env.
 
 ## Features
-- latest Ubuntu
-- IDE: nvim editor
+- Ubuntu latest
+- nvim as IDE 
 - Golang
-- Pyton3
+- Pyton3 with batteries included
 - Ansible with comunity collections
 - zsh as default shell
-
 
 ## Usage (image size ~1.6Gb)
 
 ## With Docker
 
-Build docker image:
-
 ```console
 
+# build image
 docker-compose build 
 
-```
-
-Run container:
-
-```console
-
+# run container:
 ./bin/dotfiles.sh
 
 ```
