@@ -7,7 +7,7 @@ name=$(whoami)-workstation
 #docker volume rm "$name" || true
 docker volume create "$name" || true
 
-docker run --name "$name" \
+docker run \
   -v "$HOME"/Projects:/projects \
   -v "$HOME"/.ssh:/keys \
   -v "$HOME"/.aws:/root/.aws:ro \

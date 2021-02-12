@@ -41,6 +41,7 @@ which hcloud &>/dev/null && source <(hcloud completion zsh)
 [ -f ~/.dockerfunc ] && source ~/.dockerfunc
 [ -f ~/.bash-my-aws/bash_completion.sh ] && source ~/.bash-my-aws/bash_completion.sh
 [ -f  /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
+[ -f ~/.kubectl_aliases ] && source <(cat ~/.kubectl_aliases | sed -r 's/(kubectl.*) --watch/watch \1/g')
 
 show_virtual_env() {
   if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
@@ -48,8 +49,6 @@ show_virtual_env() {
   fi
 }
 PS1='$(show_virtual_env)'$PS1
-
-[ -f ~/.kubectl_aliases ] && source <(cat ~/.kubectl_aliases | sed -r 's/(kubectl.*) --watch/watch \1/g')
 
 function kubectl() { echo "+ kubectl $@">&2; command kubectl $@; }
 

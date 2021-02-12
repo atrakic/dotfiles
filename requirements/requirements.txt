@@ -9,6 +9,13 @@ neovim
 # dev
 pytest
 coverage
+black
+pip-tools
+pre-commit
 
 # web
+bs4
+lxml
 beautifulsoup4
+fastapi
+uvicorn

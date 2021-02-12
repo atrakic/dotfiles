@@ -39,41 +39,11 @@ RUN curl -sL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
   apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 # Common packages
-RUN apt-get install \
+ADD ubuntu/packages.txt /tmp/packages.txt
+RUN cat /tmp/packages.txt | xargs apt-get install \
   -o Dpkg::Options::="--force-confdef" \
   -o Dpkg::Options::="--force-confnew" \
   --no-install-recommends --no-install-suggests -yq \
-      net-tools iputils-ping dnsutils \
-      gnupg-agent \
-      less \
-      tzdata \
-      psmisc \
-      git \
-      git-extras \ 
-      openssl \
-      wget \
-      tmux \
-      vim \
-      zsh \
-      mosh \
-      jq \
-      autojump \
-      direnv \
-      openssh-client \
-      rsync \
-      tig \
-      fzf \
-      tmate \
-      make \
-      shellcheck \
-      neovim \
-      ansible \
-      vlock \
-      python3-pip python3-dev \
-      python3-setuptools python3-boto python3-requests python3-urllib3 \
-      python3-venv python-is-python3 \
-      kubectl \
-      nodejs \
   && rm -rf /var/lib/apt/lists/* 
 
 # Install go
@@ -85,6 +55,8 @@ RUN cd /opt && wget --quiet https://storage.googleapis.com/golang/go${GOVERSION}
   ln -s /opt/go/bin/go /usr/bin/ && \
   mkdir $GOPATH
 
+# Enable unbuffered logging
+ENV PYTHONUNBUFFERED 1
 ADD requirements/requirements.txt /tmp/requirements.txt
 RUN pip3 install --upgrade pip setuptools wheel \
   && pip3 install --no-cache-dir -r /tmp/requirements.txt \
