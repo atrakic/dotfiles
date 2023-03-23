@@ -27,7 +27,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/nanotech/jellybeans.vim'
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
 
 set background=dark
 colorscheme jellybeans
+set rtp+=/opt/homebrew/opt/fzf

@@ -31,13 +31,6 @@ RUN echo $TZ > /etc/timezone && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-  apt-get install -y nodejs && \
-  npm install -g typescript aws-cdk --force
-
-RUN curl -sL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add && \
-  apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-
 # Common packages
 ADD ubuntu/packages.txt /tmp/packages.txt
 RUN cat /tmp/packages.txt | xargs apt-get install \
@@ -46,8 +39,12 @@ RUN cat /tmp/packages.txt | xargs apt-get install \
   --no-install-recommends --no-install-suggests -yq \
   && rm -rf /var/lib/apt/lists/* 
 
+RUN curl -sL https://deb.nodesource.com/setup_19.x | sudo -E bash - && \
+  sudo apt-get install -y nodejs && \
+  npm install -g typescript aws-cdk --force
+
 # Install go
-ENV GOVERSION 1.14.4
+ENV GOVERSION 1.19.3
 ENV GOROOT /opt/go
 ENV GOPATH /root/.go
 RUN cd /opt && wget --quiet https://storage.googleapis.com/golang/go${GOVERSION}.linux-amd64.tar.gz && \
