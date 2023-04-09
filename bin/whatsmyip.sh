@@ -1,0 +1,1 @@
+curl -sSL ifconfig.co
